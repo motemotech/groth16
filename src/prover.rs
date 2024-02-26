@@ -59,6 +59,7 @@ impl<E: Pairing, QAP: R1CSToQAP> Groth16<E, QAP> {
         input_assignment: &[E::ScalarField],
         aux_assignment: &[E::ScalarField],
     ) -> R1CSResult<Proof<E>> {
+        println!("create_proof_with_assignment");
         let c_acc_time = start_timer!(|| "Compute C");
         let h_assignment = cfg_into_iter!(h)
             .map(|s| s.into_bigint())
@@ -145,6 +146,7 @@ impl<E: Pairing, QAP: R1CSToQAP> Groth16<E, QAP> {
     {
         let r = E::ScalarField::rand(rng);
         let s = E::ScalarField::rand(rng);
+        println!("create_random_proof_with_reduction");
 
         Self::create_proof_with_reduction(circuit, pk, r, s)
     }
@@ -181,6 +183,7 @@ impl<E: Pairing, QAP: R1CSToQAP> Groth16<E, QAP> {
         C: ConstraintSynthesizer<E::ScalarField>,
         QAP: R1CSToQAP,
     {
+        println!("create_proof_with_reduction");
         let prover_time = start_timer!(|| "Groth16::Prover");
         let cs = ConstraintSystem::new_ref();
 
